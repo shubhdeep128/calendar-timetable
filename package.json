@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node index.js",
-    "heroku-postbuild": "cd calendar-timetable && yarn build"
+    "heroku-postbuild": "cd calendar-timetable && npm install && npm run build"
   },
   "author": "Shubh Deep",
   "license": "ISC",
