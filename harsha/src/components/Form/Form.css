@@ -1,0 +1,13 @@
+h1 {
+    font-weight: bold;
+    font-family: 'Manjari', Arial, Helvetica, sans-serif;
+    font-size: 90px;
+}
+
+input {
+    border-radius: 20px;
+    outline: 0;
+    border: black 1px;
+    border-style: solid;
+    font-size: 20px;
+}
