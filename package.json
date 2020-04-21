@@ -2,7 +2,7 @@
   "name": "calendar-timetable",
   "version": "1.0.0",
   "description": "API to post timetable to Google Calendar",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "node index.js",
     "heroku-postbuild": "cd calendar-timetable && npm install && npm run build"
@@ -15,6 +15,10 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "googleapis": "^39.2.0",
+    "mongoose": "^5.9.9",
+    "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0",
     "path": "^0.12.7"
   }
 }
