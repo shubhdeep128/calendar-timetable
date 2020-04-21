@@ -1,25 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
+import "./App.css";
+import Nav from "./Nav";
+import About from "./Components/About/About";
+import Order from "./Components/Order/Order.js";
+import Home from "./Components/Home/Home.js";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
-  const [isRed, setRed] = useState(false);
-  const [count, setCount] = useState(0);
-
-  // const [user, setUser] = useState({
-  //   name: "ed",
-  //   age: 25,
-  //   posts: ["my first post", "my second post"],
-  // });
-  const increment = () => {
-    setCount(count + 1);
-    setRed(!isRed);
-  };
-
   return (
-    <div>
-      <h1 className={isRed ? "red" : ""}>Change Color</h1>
-      <button onClick={increment}>Increment</button>
-      <h2>{count}</h2>
-    </div>
+    <Router>
+      <div className="App">
+        <Nav />
+        <Switch>
+          <Route path="/" exact component={Home} />{" "}
+          <Route path="/order" exact component={Order} />{" "}
+          <Route path="/about" exact component={About} />{" "}
+          {/* <Route path="/order/:id" exact component={ItemDetail} /> */}{" "}
+        </Switch>{" "}
+      </div>{" "}
+    </Router>
   );
 }
 
