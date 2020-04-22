@@ -9,10 +9,15 @@ const session = require('express-session');
 require('dotenv/config');
 
 //MIDDLEWARES
-app.use(cors({origin: true, credentials: true}));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname,'client','build')))
+app.use(express.static(path.join(__dirname, 'client', 'build')))
 
 
 //IMPORT SCHEMAS AND CONNECT TO DB
@@ -21,25 +26,25 @@ mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useFindAndModify', false);
 mongoose.connect(
-    process.env.MONGODB_URI,
-    {useNewUrlParser: true, useUnifiedTopology: true},
-    () => console.log("connected to MongoDB")
-    );
-
-
-    app.use(
-      session({
-        name: 'sid',
-        saveUninitialized: false,
-        resave: false,
-        secret: 'secretsauce',
-        cookie: {
-          maxAge: 1000 * 60 * 60 * 2,
-          sameSite: true,
-          secure: process.env.NODE_ENV === 'production'
-        }
-      })
-    )
+  process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  },
+  () => console.log("Connected to MongoDB")
+);
+app.use(
+  session({
+    name: 'sid',
+    saveUninitialized: false,
+    resave: false,
+    secret: 'secretsauce',
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 2,
+      sameSite: true,
+      secure: process.env.NODE_ENV === 'production'
+    }
+  })
+)
 
 //  PASSPORT AUTH
 
@@ -50,12 +55,14 @@ require("./routes/api/auth.js")(app);
 
 
 // ROUTES
-app.get('/api',(req,res) => {
-    res.send({"message":"Welcome to the Universical API"});
+app.get('/api', (req, res) => {
+  res.send({
+    "message": "Welcome to the Universical API"
+  });
 })
 
 const eventRoutes = require("./routes/api/event");
-app.use('/api/event',eventRoutes);
+app.use('/api/event', eventRoutes);
 
 
 
@@ -66,7 +73,8 @@ app.get("*", (req, res) => {
 
 
 PORT = process.env.PORT || 5050
-app.listen(PORT,function(){
-    console.log("Listening on port ",PORT);
+app.listen(PORT, function () {
+  console.log("Listening on port", PORT);
+  console.log("Open here http://localhost:3000");
 });
 module.exports = app
