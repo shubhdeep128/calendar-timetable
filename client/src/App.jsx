@@ -2,8 +2,8 @@ import React from "react";
 import "./App.css";
 import Nav from "./Nav";
 import About from "./Components/About/About";
-import Order from "./Components/Order/Order.js";
-import Home from "./Components/Home/Home.js";
+import Order from "./Components/Order/Order";
+import Home from "./Components/Home/Home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
