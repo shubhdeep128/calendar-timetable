@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
 const cors = require('cors');
 const path = require("path")
-const cookieSession = require("cookie-session");
+const session = require('express-session');
 require('dotenv/config');
 
 //MIDDLEWARES
@@ -27,13 +27,19 @@ mongoose.connect(
     );
 
 
-app.use(
-    cookieSession({
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-      keys: ["somesecretsauce"]
-    })
-  );
-  
+    app.use(
+      session({
+        name: 'sid',
+        saveUninitialized: false,
+        resave: false,
+        secret: 'secretsauce',
+        cookie: {
+          maxAge: 1000 * 60 * 60 * 2,
+          sameSite: true,
+          secure: process.env.NODE_ENV === 'production'
+        }
+      })
+    )
 
 //  PASSPORT AUTH
 
@@ -45,7 +51,7 @@ require("./routes/api/auth.js")(app);
 
 // ROUTES
 app.get('/api',(req,res) => {
-    res.send({"message":"Welcome to the course-prof API"});
+    res.send({"message":"Welcome to the Universical API"});
 })
 
 const eventRoutes = require("./routes/api/event");

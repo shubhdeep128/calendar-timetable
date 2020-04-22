@@ -1,36 +1,73 @@
 const passport = require("passport");
 const express = require("express");
 const app = express();
+const { google } = require('googleapis');
+
 const User = require('../../models/User')
+const googleUtil = require('../../google-util')
+const googleCalendarService = require('../../google-calendar.service')
+
 module.exports = app => {
   app.get("/auth/test", (req, res) => {
     res.send("Auth Working properly");
   });
   app.get(
-    "/auth/google",
-    passport.authenticate("google-auth", {
-      scope: [
-        "https://www.googleapis.com/auth/userinfo.profile",
-        "https://www.googleapis.com/auth/userinfo.email",
-        "https://www.googleapis.com/auth/calendar",
-        "https://www.googleapis.com/auth/calendar.events"
-      ]
-    })
+    "/auth/google",(req,res)=>{
+      res.redirect(googleUtil.urlGoogle());
+    }
   );
-
+  const setCookie = async (req, res, next) => {
+    googleUtil.getGoogleAccountFromCode(req.query.code, (err, res) => {
+        if (err) {
+            res.redirect('/login');
+        } else {
+            req.session.user = res;
+        }
+        next();
+    });
+}
   app.get(
     "/auth/google/callback",
-    passport.authenticate("google-auth"),
-    (req, res) => {
-      res.redirect("/");
-    }
+    setCookie, (req, res) => {
+      res.redirect('/');
+  }
   );
 
   app.get("/api/logout", (req, res) => {
-    req.logout();
-    res.redirect("/");
+    
+    req.session.destroy(err=>{
+      if(err){
+        res.redirect('/api');
+      }
+      res.clearCookie('sid');
+      req.logout();
+      res.redirect("/");
+    })
+
   });
 
+  app.get('/home', (req, res) => {
+    
+    // check for valid session
+    if (req.session.user) {
+
+        // get oauth2 client
+        const oauth2Client = new google.auth.OAuth2();
+        oauth2Client.setCredentials({
+            access_token: req.session.user.accessToken
+        });
+
+        // get calendar events by passing oauth2 client
+        googleCalendarService.listEvents(oauth2Client, (events) => {  
+            console.log(events);
+            res.json({event:events}) 
+            
+        });
+        
+    } else {
+        res.redirect('/auth/google')
+    }
+});
   app.get("/api/user/:id",async (req,res)=>{
     try {
       const user = await User.findById(req.params.id);

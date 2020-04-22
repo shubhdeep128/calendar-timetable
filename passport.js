@@ -6,13 +6,19 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 require("dotenv/config")
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  const session = {
+      id: user.gooogleID,
+      token: user.accessToken,
+      name: user.name,
+      displayPicture: user.url,
+      email: user.email
+  }
+  done(null, session);
 });
 
-passport.deserializeUser((id, done) => {
-  User.findById(id).then(user => {
-    done(null, user);
-  });
+
+passport.deserializeUser((sessionUser, done) => {
+  done(null, sessionUser)
 });
 
 passport.use('google-auth',
@@ -20,8 +26,7 @@ passport.use('google-auth',
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/auth/google/callback",
-      apiKey: process.env.GOOGLE_API_KEY
+      callbackURL: "/auth/google/callback"
     },
     (accessToken, refreshToken, profile, done) => {
       User.findOne({ email: profile.emails[0].value }).then(existingUser => {
@@ -35,9 +40,17 @@ passport.use('google-auth',
             photo: profile.photos[0].value.split("?")[0]
           })
             .save()
-            .then(user => done(null, user));
+            .then(()=>{console.log("New User Created")});
         }
       });
+      const session = {
+        token: accessToken,
+        name: profile.displayName,
+        displayPicture: profile._json.picture,
+        email: profile._json.email
+      }
+
+      done(null, session);
     }
   )
 );
