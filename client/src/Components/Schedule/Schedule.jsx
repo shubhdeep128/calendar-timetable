@@ -27,8 +27,12 @@ export default class Schedule extends Component {
             <div className="upComingChild">
               <h1>{data.summary}</h1>
               <div className="details">
-                <div className="startDate">{data.start.dateTime}</div>
-                <div className="endDate">{data.start.dateTime}</div>
+                <div className="startDate">
+                  From: {data.start.dateTime.substring(0, 10)}
+                </div>
+                <div className="endDate">
+                  To: {data.end.dateTime.substring(0, 10)}
+                </div>
               </div>
             </div>
           ))}

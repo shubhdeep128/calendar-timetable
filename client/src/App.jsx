@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import "./App.css";
 import Nav from "./Nav";
 import About from "./Components/About/About";
-import Order from "./Components/Order/Order";
+import Add from "./Components/Add/Add";
 import Home from "./Components/Home/Home";
 import Schedule from "./Components/Schedule/Schedule";
+
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 class App extends Component {
@@ -15,7 +16,7 @@ class App extends Component {
           <Nav />
           <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/order" exact component={Order} />
+            <Route path="/add" exact component={Add} />
             <Route path="/about" exact component={About} />
             <Route path="/schedule" exact component={Schedule} />
             {/* <Route path="/order/:id" exact component={ItemDetail} /> */}
