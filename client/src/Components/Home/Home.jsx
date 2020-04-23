@@ -20,6 +20,7 @@ function App() {
         </a>
       </div>
       <br />
+      <a href="/schedule">/schedule</a>
       <a href="/api/event">/api/event</a>
       <a href="/api/event/add">/api/event/add</a>
     </header>
