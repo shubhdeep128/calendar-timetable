@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "node index.js",
-    "heroku-postbuild": "cd calendar-timetable && npm install && npm run build"
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "Shubh Deep",
   "license": "ISC",
