@@ -75,6 +75,6 @@ app.get("*", (req, res) => {
 PORT = process.env.PORT || 5050
 app.listen(PORT, function () {
   console.log("Listening on port", PORT);
-  console.log("Open here http://localhost:3000");
+  console.log(`Open here http://localhost:${PORT}`);
 });
 module.exports = app

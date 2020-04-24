@@ -32,7 +32,7 @@ module.exports.listEvents = function (auth, cb) {
   });
 }
 
-module.exports.addEvent = function (auth, cb) {
+module.exports.addEvent = function (auth, event, cb) {
 
   console.log(process.env.GOOGLE_API_KEY)
 
@@ -42,29 +42,9 @@ module.exports.addEvent = function (auth, cb) {
   })
 
 
-  const eventStartTime = new Date();
-  eventStartTime.setDate(eventStartTime.getDay())
-  eventStartTime.setMinutes(eventStartTime.getMinutes() + 30)
-  const eventEndTime = new Date()
-  eventEndTime.setDate(eventEndTime.getDay())
-  eventEndTime.setMinutes(eventEndTime.getMinutes() + 90)
+  
 
-  const event = {
-    summary: 'Test Event',
-    location: 'Home',
-    description: 'This is an event to test universical api',
-    colorId: 1,
-    start: {
-      dateTime: eventStartTime,
-      timeZone: 'Asia/Kolkata'
-    },
-    end: {
-      dateTime: eventEndTime,
-      timeZone: 'Asia/Kolkata'
-    },
-    colorId: 1,
-  }
-
+  
   calendar.events.insert({
       auth: auth,
       calendarId: 'primary',
@@ -105,4 +85,26 @@ module.exports.addEvent = function (auth, cb) {
   // )
 
 
+}
+
+
+module.exports.deleteEvent = function(auth,eventId,cb){
+
+  const calendar = google.calendar({
+    version: 'v3',
+    auth: auth
+  })
+
+  calendar.events.delete({
+    auth:auth,
+    calendarId: 'primary',
+    eventId: eventId
+  }, function(err){
+    if(err){
+      console.log("Event Deletion error: "+err);
+      return
+    }
+    console.log('Event deleted')
+    cb(eventId)
+  })
 }

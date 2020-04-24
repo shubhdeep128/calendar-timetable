@@ -27,7 +27,7 @@ router.get("/",(req, res) => {
         });
         
     } else {
-        res.redirect('/auth/google')
+        res.json({status:"Unauthorized"})
     }
 });
 
@@ -41,11 +41,31 @@ router.get("/add",async (req,res)=>{
             apiKey: process.env.GOOGLE_API_KEY
             
         });
-        console.log("token")
+        const eventStartTime = new Date();
+        eventStartTime.setDate(eventStartTime.getDay())
+        eventStartTime.setMinutes(eventStartTime.getMinutes() + 30)
+        const eventEndTime = new Date()
+        eventEndTime.setDate(eventEndTime.getDay())
+        eventEndTime.setMinutes(eventEndTime.getMinutes() + 90)
+        const event = {
+            summary: 'Test Event',
+            location: 'Home',
+            description: 'This is an event to test universical api',
+            colorId: 1,
+            start: {
+              dateTime: eventStartTime,
+              timeZone: 'Asia/Kolkata'
+            },
+            end: {
+              dateTime: eventEndTime,
+              timeZone: 'Asia/Kolkata'
+            },
+            colorId: 1,
+          }
         
-        googleCalendarService.addEvent(oauth2Client, (event) => {  
+        googleCalendarService.addEvent(oauth2Client,event, (newEvent) => {  
             // console.log(event);
-            res.json({message:"Event added succesfully",event:event}) 
+            res.json({message:"Event added succesfully",event:newEvent}) 
             
         });
         
@@ -57,10 +77,30 @@ router.get("/add",async (req,res)=>{
 router.get('/:id',async (req,res)=>{
    
 
+
 });
 
+router.patch('/:id',async(req,res)=>{
+    res.json({message:"Update"})
+})
+
 router.delete('/:id',async (req,res) => {
-   
+    if(req.session.user){
+        const oauth2Client = new google.auth.OAuth2();
+        oauth2Client.setCredentials({
+            access_token: req.session.user.accessToken,
+            apiKey: process.env.GOOGLE_API_KEY
+            
+        });
+        googleCalendarService.deleteEvent(oauth2Client,req.params.id, (eventId) => {  
+            // console.log(event);
+            res.json({message:"Event deleted succesfully",eventId:eventId}) 
+            
+        });
+    }
+    else{
+        res.json({status:"Unauthorized"})
+    }
 });
 
 

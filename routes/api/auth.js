@@ -17,11 +17,25 @@ module.exports = app => {
     }
   );
   const setCookie = async (req, res, next) => {
-    googleUtil.getGoogleAccountFromCode(req.query.code, (err, res) => {
+    googleUtil.getGoogleAccountFromCode(req.query.code, (err, profile) => {
         if (err) {
             res.redirect('/login');
         } else {
-            req.session.user = res;
+            req.session.user = profile;
+            User.findOne({ email: profile.email }).then(existingUser => {
+              if (existingUser) {
+                console.log("existing user")
+              } else {
+                new User({
+                  googleId: profile.id,
+                  name: profile.name,
+                  email: profile.email,
+                  photo: profile.photo
+                })
+                  .save()
+                  .then(()=>{console.log("New User Created")});
+              }
+            });
         }
         next();
     });
@@ -46,28 +60,7 @@ module.exports = app => {
 
   });
 
-  app.get('/home', (req, res) => {
-    
-    // check for valid session
-    if (req.session.user) {
-
-        // get oauth2 client
-        const oauth2Client = new google.auth.OAuth2();
-        oauth2Client.setCredentials({
-            access_token: req.session.user.accessToken
-        });
-
-        // get calendar events by passing oauth2 client
-        googleCalendarService.listEvents(oauth2Client, (events) => {  
-            console.log(events);
-            res.json({event:events}) 
-            
-        });
-        
-    } else {
-        res.redirect('/auth/google')
-    }
-});
+  
   app.get("/api/user/:id",async (req,res)=>{
     try {
       const user = await User.findById(req.params.id);
@@ -84,7 +77,7 @@ module.exports = app => {
       res.send({user:req.user,loggedIn:true});
     }
     else{
-      res.send({user:{Roles: "Unauthorized"},loggedIn:false})
+      res.send({user:{status: "Unauthorized"},loggedIn:false})
     }
   });
 };
