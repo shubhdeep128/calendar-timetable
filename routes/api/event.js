@@ -62,7 +62,7 @@ router.get("/add",async (req,res)=>{
             },
             colorId: 1,
           }
-        
+        // event = req.body
         googleCalendarService.addEvent(oauth2Client,event, (newEvent) => {  
             // console.log(event);
             res.json({message:"Event added succesfully",event:newEvent}) 
@@ -75,13 +75,52 @@ router.get("/add",async (req,res)=>{
 });
 
 router.get('/:id',async (req,res)=>{
-   
+    if (req.session.user) {
+        console.log(req.session)
+        // get oauth2 client
+        const oauth2Client = new google.auth.OAuth2();
+        oauth2Client.setCredentials({
+            access_token: req.session.user.accessToken
+        });
 
-
-});
+        // get calendar events by passing oauth2 client
+        googleCalendarService.getEvent(oauth2Client, req.params.id, (event) => {  
+            // console.log(events);
+            res.json({resource:event}) 
+            
+        });
+        
+    } else {
+        res.json({status:"Unauthorized"})
+    }
+})
 
 router.patch('/:id',async(req,res)=>{
-    res.json({message:"Update"})
+    if (req.session.user) {
+
+        // get oauth2 client
+        const oauth2Client = new google.auth.OAuth2();
+        oauth2Client.setCredentials({
+            access_token: req.session.user.accessToken,
+            apiKey: process.env.GOOGLE_API_KEY
+            
+        });
+
+        const event = {
+
+            description: 'This event is now updated',
+  
+          }
+        // event = req.body
+        googleCalendarService.editEvent(oauth2Client,event,req.params.id,(newEvent) => {  
+            // console.log(event);
+            res.json({message:"Event Updated succesfully",event:newEvent}) 
+            
+        });
+        
+    } else {
+        res.redirect('/auth/google')
+    }
 })
 
 router.delete('/:id',async (req,res) => {
@@ -104,4 +143,4 @@ router.delete('/:id',async (req,res) => {
 });
 
 
-module.exports = router;
+module.exports = router

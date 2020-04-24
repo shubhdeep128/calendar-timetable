@@ -1,6 +1,4 @@
-const {
-  google
-} = require('googleapis');
+const { google } = require('googleapis');
 
 module.exports.listEvents = function (auth, cb) {
   const calendar = google.calendar({
@@ -41,10 +39,6 @@ module.exports.addEvent = function (auth, event, cb) {
     auth: auth
   })
 
-
-  
-
-  
   calendar.events.insert({
       auth: auth,
       calendarId: 'primary',
@@ -59,30 +53,30 @@ module.exports.addEvent = function (auth, event, cb) {
       cb(event);
     })
 
-  // calendar.freebusy.query(
-  //     {
-  //         resource: {
-  //             timeMin: eventStartTime,
-  //             timeMax: eventEndTime,
-  //             timeZone: 'Asia/Kolkata',
-  //             items: [{ id: 'primary' }],
-  //         },
-  //     },
-  //     (err,res) => {
-  //         if(err) return console.error('Free Busy Query Error: ',err)
+  calendar.freebusy.query(
+      {
+          resource: {
+              timeMin: eventStartTime,
+              timeMax: eventEndTime,
+              timeZone: 'Asia/Kolkata',
+              items: [{ id: 'primary' }],
+          },
+      },
+      (err,res) => {
+          if(err) return console.error('Free Busy Query Error: ',err)
 
-  //         const eventsArr = res.data.calendars.primary.busy
-  //         console.log("Events Arr: ",eventsArr)
-  //         if(eventsArr.length === 0) return calendar.events.insert(
-  //             { calendarId: 'primary', resource: event },
-  //              (err) => {
-  //                  if(err) return console.error('Calendar Event Creation Error: ',err)
+          const eventsArr = res.data.calendars.primary.busy
+          console.log("Events Arr: ",eventsArr)
+          if(eventsArr.length === 0) return calendar.events.insert(
+              { calendarId: 'primary', resource: event },
+               (err) => {
+                   if(err) return console.error('Calendar Event Creation Error: ',err)
 
-  //                  return console.log('Calendar Event Created')
-  //              })
-  //              return console.log(`Sorry I'm Busy`)
-  //     }
-  // )
+                   return console.log('Calendar Event Created')
+               })
+               return console.log(`Sorry I'm Busy`)
+      }
+  )
 
 
 }
@@ -106,5 +100,44 @@ module.exports.deleteEvent = function(auth,eventId,cb){
     }
     console.log('Event deleted')
     cb(eventId)
+  })
+}
+
+module.exports.editEvent = function(auth,event,eventId,cb){
+  const calendar = google.calendar({
+    version: 'v3',
+    auth: auth
+  })
+  calendar.events.patch({
+    auth:auth,
+    calendarId: 'primary',
+    eventId: eventId,
+    resource:event
+  }, (err,event)=>{
+    if(err){
+      console.log("Event Patch error: "+err);
+      return
+    }
+    console.log('Event Updated')
+    cb(event)
+  })
+}
+
+module.exports.getEvent = function(auth,eventId,cb){
+  const calendar = google.calendar({
+    version: 'v3',
+    auth: auth
+  })
+  calendar.events.patch({
+    auth:auth,
+    calendarId: 'primary',
+    eventId: eventId,
+  }, (err,event)=>{
+    if(err){
+      console.log("Event GET error: "+err);
+      return
+    }
+    console.log(event)
+    cb(event)
   })
 }
