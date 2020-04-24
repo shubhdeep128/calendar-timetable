@@ -21,6 +21,7 @@ body {
 
 .upComingChild {
     padding: 20px;
+    min-width: 500px;
     margin: 5px 0px 5px 0px;
     text-align: left;
     border-radius: 5px;
@@ -32,6 +33,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 
@@ -42,4 +44,11 @@ body {
         text-align: center;
         max-width: 500px;
     }
+
+    .upComingChild {
+        padding: 20px;
+        min-width: 90vw;
+    }
+
+
 }
