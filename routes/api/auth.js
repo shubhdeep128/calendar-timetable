@@ -4,48 +4,32 @@ const app = express();
 const { google } = require('googleapis');
 
 const User = require('../../models/User')
-const googleUtil = require('../../google-util')
-const googleCalendarService = require('../../google-calendar.service')
+const googleCalendarService = require('../../utils/google-calendar.service')
 
 module.exports = app => {
   app.get("/auth/test", (req, res) => {
     res.send("Auth Working properly");
   });
   app.get(
-    "/auth/google",(req,res)=>{
-      res.redirect(googleUtil.urlGoogle());
-    }
+    "/auth/google",
+    passport.authenticate("google", {
+      scope: [
+        'https://www.googleapis.com/auth/calendar.events.readonly',
+        'profile',
+        'email',
+        'https://www.googleapis.com/auth/calendar'
+      ]
+    })
   );
-  const setCookie = async (req, res, next) => {
-    googleUtil.getGoogleAccountFromCode(req.query.code, (err, profile) => {
-        if (err) {
-            res.redirect('/login');
-        } else {
-            req.session.user = profile;
-            User.findOne({ email: profile.email }).then(existingUser => {
-              if (existingUser) {
-                console.log("existing user")
-              } else {
-                new User({
-                  googleId: profile.id,
-                  name: profile.name,
-                  email: profile.email,
-                  photo: profile.photo
-                })
-                  .save()
-                  .then(()=>{console.log("New User Created")});
-              }
-            });
-        }
-        next();
-    });
-}
+  
   app.get(
-    "/auth/google/callback",
-    setCookie, (req, res) => {
-      res.redirect('/');
-  }
-  );
+     "/auth/google/callback",
+     passport.authenticate("google"),
+     (req, res) => {
+      //  console.log(req.session)
+       res.redirect("/");
+     }
+  ) ;
 
   app.get("/api/logout", (req, res) => {
     
@@ -80,4 +64,4 @@ module.exports = app => {
       res.send({user:{status: "Unauthorized"},loggedIn:false})
     }
   });
-};
+}

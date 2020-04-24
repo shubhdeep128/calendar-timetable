@@ -50,7 +50,7 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-require("./passport.js");
+require("./utils/passport.js");
 require("./routes/api/auth.js")(app);
 
 

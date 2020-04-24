@@ -1,7 +1,7 @@
 const passport = require("passport");
 const express = require("express");
 const { google } = require('googleapis')
-const googleCalendarService = require('../../google-calendar.service')
+const googleCalendarService = require('../../utils/google-calendar.service')
 
 require('dotenv/config');
 
@@ -10,34 +10,28 @@ router = express.Router();
 
 router.get("/",(req, res) => {
     
-    // check for valid session
-    if (req.session.user) {
+    if (req.isAuthenticated()) {
+        
         console.log(req.session)
-        // get oauth2 client
         const oauth2Client = new google.auth.OAuth2();
         oauth2Client.setCredentials({
-            access_token: req.session.user.accessToken
+            access_token: req.session.accessToken
         });
 
-        // get calendar events by passing oauth2 client
         googleCalendarService.listEvents(oauth2Client, (events) => {  
-            // console.log(events);
             res.json({event:events}) 
-            
         });
-        
     } else {
         res.json({status:"Unauthorized"})
     }
 });
 
 router.get("/add",async (req,res)=>{
-    if (req.session.user) {
+    if (req.isAuthenticated()) {
 
-        // get oauth2 client
         const oauth2Client = new google.auth.OAuth2();
         oauth2Client.setCredentials({
-            access_token: req.session.user.accessToken,
+            access_token: req.session.accessToken,
             apiKey: process.env.GOOGLE_API_KEY
             
         });
@@ -64,30 +58,24 @@ router.get("/add",async (req,res)=>{
           }
         // event = req.body
         googleCalendarService.addEvent(oauth2Client,event, (newEvent) => {  
-            // console.log(event);
             res.json({message:"Event added succesfully",event:newEvent}) 
-            
         });
         
     } else {
-        res.redirect('/auth/google')
+        res.json({status:"Unauthorized"})
     }
 });
 
 router.get('/:id',async (req,res)=>{
-    if (req.session.user) {
+    if (req.isAuthenticated()) {
+
         console.log(req.session)
-        // get oauth2 client
         const oauth2Client = new google.auth.OAuth2();
         oauth2Client.setCredentials({
-            access_token: req.session.user.accessToken
+            access_token: req.session.accessToken
         });
-
-        // get calendar events by passing oauth2 client
         googleCalendarService.getEvent(oauth2Client, req.params.id, (event) => {  
-            // console.log(events);
             res.json({resource:event}) 
-            
         });
         
     } else {
@@ -96,45 +84,37 @@ router.get('/:id',async (req,res)=>{
 })
 
 router.patch('/:id',async(req,res)=>{
-    if (req.session.user) {
+    if (req.isAuthenticated()) {
 
-        // get oauth2 client
         const oauth2Client = new google.auth.OAuth2();
         oauth2Client.setCredentials({
-            access_token: req.session.user.accessToken,
+            access_token: req.session.accessToken,
             apiKey: process.env.GOOGLE_API_KEY
             
         });
-
         const event = {
-
             description: 'This event is now updated',
-  
           }
         // event = req.body
         googleCalendarService.editEvent(oauth2Client,event,req.params.id,(newEvent) => {  
-            // console.log(event);
             res.json({message:"Event Updated succesfully",event:newEvent}) 
-            
         });
         
     } else {
-        res.redirect('/auth/google')
+        res.json({status:"Unauthorized"})
     }
 })
 
 router.delete('/:id',async (req,res) => {
-    if(req.session.user){
+    if(req.isAuthenticated()){
         const oauth2Client = new google.auth.OAuth2();
         oauth2Client.setCredentials({
-            access_token: req.session.user.accessToken,
+            access_token: req.session.accessToken,
             apiKey: process.env.GOOGLE_API_KEY
             
         });
         googleCalendarService.deleteEvent(oauth2Client,req.params.id, (eventId) => {  
-            // console.log(event);
             res.json({message:"Event deleted succesfully",eventId:eventId}) 
-            
         });
     }
     else{

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const User = require("./models/User")
+const User = require("../models/User")
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
@@ -21,14 +21,15 @@ passport.deserializeUser((sessionUser, done) => {
   done(null, sessionUser)
 });
 
-passport.use('google-auth',
+passport.use('google',
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/auth/google/callback"
+      callbackURL: "/auth/google/callback",
+      passReqToCallback: true
     },
-    (accessToken, refreshToken, profile, done) => {
+    (req,accessToken, refreshToken, profile, done) => {
       User.findOne({ email: profile.emails[0].value }).then(existingUser => {
         if (existingUser) {
           done(null, existingUser);
@@ -41,16 +42,12 @@ passport.use('google-auth',
           })
             .save()
             .then(()=>{console.log("New User Created")});
+            
         }
       });
-      const session = {
-        token: accessToken,
-        name: profile.displayName,
-        displayPicture: profile._json.picture,
-        email: profile._json.email
-      }
-
-      done(null, session);
+      req.session.accessToken = accessToken
+      req.session.refreshToken = refreshToken
+      console.log(req.session)
     }
   )
 );
