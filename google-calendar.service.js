@@ -1,6 +1,4 @@
-const {
-  google
-} = require('googleapis');
+const { google } = require('googleapis');
 
 module.exports.listEvents = function (auth, cb) {
   const calendar = google.calendar({
@@ -32,7 +30,7 @@ module.exports.listEvents = function (auth, cb) {
   });
 }
 
-module.exports.addEvent = function (auth, cb) {
+module.exports.addEvent = function (auth, event, cb) {
 
   console.log(process.env.GOOGLE_API_KEY)
 
@@ -40,30 +38,6 @@ module.exports.addEvent = function (auth, cb) {
     version: 'v3',
     auth: auth
   })
-
-
-  const eventStartTime = new Date();
-  eventStartTime.setDate(eventStartTime.getDay())
-  eventStartTime.setMinutes(eventStartTime.getMinutes() + 30)
-  const eventEndTime = new Date()
-  eventEndTime.setDate(eventEndTime.getDay())
-  eventEndTime.setMinutes(eventEndTime.getMinutes() + 90)
-
-  const event = {
-    summary: 'Test Event',
-    location: 'Home',
-    description: 'This is an event to test universical api',
-    colorId: 1,
-    start: {
-      dateTime: eventStartTime,
-      timeZone: 'Asia/Kolkata'
-    },
-    end: {
-      dateTime: eventEndTime,
-      timeZone: 'Asia/Kolkata'
-    },
-    colorId: 1,
-  }
 
   calendar.events.insert({
       auth: auth,
@@ -79,30 +53,91 @@ module.exports.addEvent = function (auth, cb) {
       cb(event);
     })
 
-  // calendar.freebusy.query(
-  //     {
-  //         resource: {
-  //             timeMin: eventStartTime,
-  //             timeMax: eventEndTime,
-  //             timeZone: 'Asia/Kolkata',
-  //             items: [{ id: 'primary' }],
-  //         },
-  //     },
-  //     (err,res) => {
-  //         if(err) return console.error('Free Busy Query Error: ',err)
+  calendar.freebusy.query(
+      {
+          resource: {
+              timeMin: eventStartTime,
+              timeMax: eventEndTime,
+              timeZone: 'Asia/Kolkata',
+              items: [{ id: 'primary' }],
+          },
+      },
+      (err,res) => {
+          if(err) return console.error('Free Busy Query Error: ',err)
 
-  //         const eventsArr = res.data.calendars.primary.busy
-  //         console.log("Events Arr: ",eventsArr)
-  //         if(eventsArr.length === 0) return calendar.events.insert(
-  //             { calendarId: 'primary', resource: event },
-  //              (err) => {
-  //                  if(err) return console.error('Calendar Event Creation Error: ',err)
+          const eventsArr = res.data.calendars.primary.busy
+          console.log("Events Arr: ",eventsArr)
+          if(eventsArr.length === 0) return calendar.events.insert(
+              { calendarId: 'primary', resource: event },
+               (err) => {
+                   if(err) return console.error('Calendar Event Creation Error: ',err)
 
-  //                  return console.log('Calendar Event Created')
-  //              })
-  //              return console.log(`Sorry I'm Busy`)
-  //     }
-  // )
+                   return console.log('Calendar Event Created')
+               })
+               return console.log(`Sorry I'm Busy`)
+      }
+  )
 
 
+}
+
+
+module.exports.deleteEvent = function(auth,eventId,cb){
+
+  const calendar = google.calendar({
+    version: 'v3',
+    auth: auth
+  })
+
+  calendar.events.delete({
+    auth:auth,
+    calendarId: 'primary',
+    eventId: eventId
+  }, function(err){
+    if(err){
+      console.log("Event Deletion error: "+err);
+      return
+    }
+    console.log('Event deleted')
+    cb(eventId)
+  })
+}
+
+module.exports.editEvent = function(auth,event,eventId,cb){
+  const calendar = google.calendar({
+    version: 'v3',
+    auth: auth
+  })
+  calendar.events.patch({
+    auth:auth,
+    calendarId: 'primary',
+    eventId: eventId,
+    resource:event
+  }, (err,event)=>{
+    if(err){
+      console.log("Event Patch error: "+err);
+      return
+    }
+    console.log('Event Updated')
+    cb(event)
+  })
+}
+
+module.exports.getEvent = function(auth,eventId,cb){
+  const calendar = google.calendar({
+    version: 'v3',
+    auth: auth
+  })
+  calendar.events.patch({
+    auth:auth,
+    calendarId: 'primary',
+    eventId: eventId,
+  }, (err,event)=>{
+    if(err){
+      console.log("Event GET error: "+err);
+      return
+    }
+    console.log(event)
+    cb(event)
+  })
 }
