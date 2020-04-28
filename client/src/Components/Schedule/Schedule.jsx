@@ -37,16 +37,16 @@ export default class Schedule extends Component {
               <h1>{data.summary}</h1>
               <div className="details">
                 <div className="startDate">
-                  From:
+                  From:{" "}
                   {data.start.dateTime
                     ? data.start.dateTime.substring(0, 10).slice(-4)
-                    : data.start.date}
+                    : data.start.date.slice(-4)}
                 </div>
                 <div className="endDate">
-                  To:
+                  To:{" "}
                   {data.end.dateTime
                     ? data.end.dateTime.substring(0, 10).slice(-4)
-                    : data.start.date}
+                    : data.start.date.slice(-4)}
                 </div>
               </div>
             </div>
