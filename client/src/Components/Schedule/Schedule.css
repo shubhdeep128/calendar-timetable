@@ -1,141 +1,140 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    margin-top: 8vh;
-    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+  margin-top: 8vh;
+  font-family: "Montserrat", Arial, Helvetica, sans-serif;
+}
+.titleHead {
+  font-family: "Manjari", "Montserrat", Arial, Helvetica, sans-serif;
+  margin-top: 10vh;
+  font-size: 3em;
+  position: relative;
 }
 
 .upComing {
-    padding: 20px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .upComingChild {
-    cursor: pointer;
-    padding: 20px;
-    min-width: 500px;
-    margin: 5px 0px 5px 0px;
-    text-align: left;
-    border-radius: 5px;
-    max-width: 700px;
-    border: 1px solid #000000;
+  cursor: pointer;
+  padding: 20px;
+  min-width: 500px;
+  margin: 5px 0px 5px 0px;
+  text-align: left;
+  border-radius: 5px;
+  max-width: 700px;
+  border: 1px solid #000000;
 }
-
 
 .upComingChild .details {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-
 @media (max-width: 580px) {
+  .upComing {
+    padding: 20px;
+    text-align: center;
+    max-width: 500px;
+  }
 
-    .upComing {
-        padding: 20px;
-        text-align: center;
-        max-width: 500px;
-    }
-
-    .upComingChild {
-        padding: 20px;
-        min-width: 90vw;
-    }
-
-
+  .upComingChild {
+    padding: 20px;
+    min-width: 90vw;
+  }
 }
 
 .ajax-loaded {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .ajax-loading {
-    visibility: show;
+  visibility: show;
 }
 
 /* Colors */
 .colorundefined {
-    border: none !important;
-    background-color: #1a73e8;
-    color: #e9f1fc;
+  border: none !important;
+  background-color: #1a73e8;
+  color: #e9f1fc;
 }
 
 .color1 {
-    border: none !important;
-    background-color: #7986cb;
-
+  border: none !important;
+  background-color: #7986cb;
 }
 
 .color2 {
-    border: none !important;
-    /* Sage  */
-    background-color: #33b679;
-    color: rgb(228, 252, 237);
+  border: none !important;
+  /* Sage  */
+  background-color: #33b679;
+  color: rgb(228, 252, 237);
 }
 
 .color3 {
-    border: none !important;
-    /* Grape */
-    background-color: #8e24aa;
+  border: none !important;
+  /* Grape */
+  background-color: #8e24aa;
 }
 
 .color4 {
-    border: none !important;
-    /* Flamingo  */
-    background-color: #e97268;
-    color: rgb(253, 243, 241);
+  border: none !important;
+  /* Flamingo  */
+  background-color: #e97268;
+  color: rgb(253, 243, 241);
 }
 
 .color5 {
-    border: none !important;
-    /* Banana  */
-    background-color: #f6c026;
+  border: none !important;
+  /* Banana  */
+  background-color: #f6c026;
 }
 
 .color6 {
-    border: none !important;
-    /* Tangerine  */
-    background-color: #f5511d;
-    color: #FFECE5;
+  border: none !important;
+  /* Tangerine  */
+  background-color: #f5511d;
+  color: #ffece5;
 }
 
 .color7 {
-    border: none !important;
-    /* Peacock  */
-    background-color: #039be5;
+  border: none !important;
+  /* Peacock  */
+  background-color: #039be5;
 }
 
 .color8 {
-    border: none !important;
-    /* Graphite  */
-    background-color: #616161;
+  border: none !important;
+  /* Graphite  */
+  background-color: #616161;
 }
 
 .color9 {
-    border: none !important;
-    /* Blueberry  */
-    background-color: #3f51b5;
-    color: #d9dffc;
+  border: none !important;
+  /* Blueberry  */
+  background-color: #3f51b5;
+  color: #d9dffc;
 }
 
 .color10 {
-    border: none !important;
-    /* Basil */
-    background-color: #0b8043;
-    color: #d5fde8;
+  border: none !important;
+  /* Basil */
+  background-color: #0b8043;
+  color: #d5fde8;
 }
 
 .color11 {
-    /* Tomato  */
-    background-color: #d60000;
+  /* Tomato  */
+  background-color: #d60000;
 }

@@ -29,7 +29,7 @@ export default class Schedule extends Component {
   render() {
     return (
       <div>
-        <h1>Upcoming Events</h1>
+        <h1 className="titleHead">Upcoming Events</h1>
         {this.loading()}
         <div className="upComing">
           {this.state.data.map((data) => (

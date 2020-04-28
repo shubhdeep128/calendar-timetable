@@ -67,7 +67,11 @@ nav {
 }
 
 .navBar {
-  background: linear-gradient(180deg, #EBE1FF 0%, rgba(247, 243, 255, 0.89) 100%);
+  background: linear-gradient(
+    180deg,
+    #ebe1ff 0%,
+    rgba(247, 243, 255, 0.89) 100%
+  );
   /* filter: blur(10px);
   -webkit-filter: blur(10px);
   -moz-filter: blur(10px);
@@ -96,6 +100,8 @@ body {
 
 .title {
   font-size: 3em;
+  margin-top: 10px;
+  font-family: "Manjari", sans-serif !important;
 }
 
 .foodCard {
@@ -114,7 +120,6 @@ body {
   align-items: center;
   justify-content: center;
 }
-
 
 /* 
 Google Button
