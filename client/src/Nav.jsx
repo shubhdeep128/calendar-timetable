@@ -9,18 +9,17 @@ function Nav() {
   return (
     <nav>
       <Link to={"/"}>
-        <img src={homeSVG} alt="" />{" "}
-      </Link>{" "}
+        <img src={homeSVG} alt="" />
+      </Link>
       <Link to={"/upload"}>
         <h3>
-          {" "}
           <img className="uploadSVG" src={uploadSVG} alt="upload logo"></img>
-          &nbsp;Upload Timetable{" "}
-        </h3>{" "}
-      </Link>{" "}
+          &nbsp; Upload
+        </h3>
+      </Link>
       {/* <Link to={"/order"}>
-        <h3> Order </h3>{" "}
-      </Link>{" "} */}
+              <h3> Order </h3>
+            </Link> */}
     </nav>
   );
 }

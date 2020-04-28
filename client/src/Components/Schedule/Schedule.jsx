@@ -33,9 +33,9 @@ export default class Schedule extends Component {
         {this.loading()}
         <div className="upComing">
           {this.state.data.map((data) => (
-            <div className="upComingChild">
+            <div className={`upComingChild color${data.colorId}`}>
               <h1>{data.summary}</h1>
-              <div className="details">
+              <div className={`details`}>
                 <div className="startDate">
                   From:{" "}
                   {data.start.dateTime
