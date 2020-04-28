@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "./Schedule.css";
-
+import * as moment from "moment";
 export default class Schedule extends Component {
   state = {
     data: [],
@@ -37,16 +37,14 @@ export default class Schedule extends Component {
               <h1>{data.summary}</h1>
               <div className={`details`}>
                 <div className="startDate">
-                  From:{" "}
                   {data.start.dateTime
-                    ? data.start.dateTime.substring(0, 10).slice(-4)
-                    : data.start.date.slice(-4)}
+                    ? moment(data.start.dateTime).calendar()
+                    : moment(data.start.date).format("ll")}
                 </div>
                 <div className="endDate">
-                  To:{" "}
                   {data.end.dateTime
-                    ? data.end.dateTime.substring(0, 10).slice(-4)
-                    : data.start.date.slice(-4)}
+                    ? moment(data.end.dateTime).format("Do MMM")
+                    : moment(data.end.date).format("Do MMM")}
                 </div>
               </div>
             </div>

@@ -12,6 +12,10 @@
   height: 20px;
 }
 
+.logoSVG {
+  margin-top: 2px;
+}
+
 @media (max-width: 920px) {
   .App-logo {
     height: 40vmin;
@@ -60,6 +64,15 @@ nav {
   top: 0px;
   font-family: "Montserrat", sans-serif;
   background-color: #fff;
+}
+
+.navBar {
+  background: linear-gradient(180deg, #EBE1FF 0%, rgba(247, 243, 255, 0.89) 100%);
+  /* filter: blur(10px);
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px); */
 }
 
 img {

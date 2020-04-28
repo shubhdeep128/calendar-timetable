@@ -20,6 +20,7 @@ body {
 }
 
 .upComingChild {
+    cursor: pointer;
     padding: 20px;
     min-width: 500px;
     margin: 5px 0px 5px 0px;
@@ -28,6 +29,7 @@ body {
     max-width: 700px;
     border: 1px solid #000000;
 }
+
 
 .upComingChild .details {
     display: flex;

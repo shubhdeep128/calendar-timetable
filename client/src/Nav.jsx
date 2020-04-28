@@ -1,20 +1,24 @@
 import React from "react";
 import "./App.css";
-import homeSVG from "./SVGs/home.svg";
+import hamburger from "./SVGs/home.svg";
+import smallLogoSVG from "./SVGs/smallLogo.svg";
 import uploadSVG from "./SVGs/upload.svg";
 
 import { Link } from "react-router-dom";
 
 function Nav() {
   return (
-    <nav>
+    <nav className="navBar">
       <Link to={"/"}>
-        <img src={homeSVG} alt="" />
+        <img src={hamburger} alt="Hamburger" />
+      </Link>
+      <Link to={"/"}>
+        <img className="logoSVG" src={smallLogoSVG} alt="Logo" />
       </Link>
       <Link to={"/upload"}>
         <h3>
           <img className="uploadSVG" src={uploadSVG} alt="upload logo"></img>
-          &nbsp; Upload
+          &nbsp;
         </h3>
       </Link>
       {/* <Link to={"/order"}>
