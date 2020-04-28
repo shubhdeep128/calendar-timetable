@@ -22,11 +22,11 @@ router.get("/",(req, res) => {
             res.json({event:events}) 
         });
     } else {
-        res.json({status:"Unauthorized"})
+        res.status(401).send({status:"Unauthorized"})
     }
 });
 
-router.get("/add",async (req,res)=>{
+router.post("/add",async (req,res)=>{
     if (req.isAuthenticated()) {
 
         const oauth2Client = new google.auth.OAuth2();
@@ -35,34 +35,16 @@ router.get("/add",async (req,res)=>{
             apiKey: process.env.GOOGLE_API_KEY
             
         });
-        const eventStartTime = new Date();
-        eventStartTime.setDate(eventStartTime.getDay())
-        eventStartTime.setMinutes(eventStartTime.getMinutes() + 30)
-        const eventEndTime = new Date()
-        eventEndTime.setDate(eventEndTime.getDay())
-        eventEndTime.setMinutes(eventEndTime.getMinutes() + 90)
-        const event = {
-            summary: 'Test Event',
-            location: 'Home',
-            description: 'This is an event to test universical api',
-            colorId: 1,
-            start: {
-              dateTime: eventStartTime,
-              timeZone: 'Asia/Kolkata'
-            },
-            end: {
-              dateTime: eventEndTime,
-              timeZone: 'Asia/Kolkata'
-            },
-            colorId: 1,
-          }
-        // event = req.body
-        googleCalendarService.addEvent(oauth2Client,event, (newEvent) => {  
-            res.json({message:"Event added succesfully",event:newEvent}) 
+        
+        event = req.body
+        console.log(event)
+        googleCalendarService.addEvent(oauth2Client,event, (response) => {  
+            console.log(response)
+            res.json({message:response}) 
         });
         
     } else {
-        res.json({status:"Unauthorized"})
+        res.status(401).send({status:"Unauthorized"})
     }
 });
 
@@ -79,7 +61,7 @@ router.get('/:id',async (req,res)=>{
         });
         
     } else {
-        res.json({status:"Unauthorized"})
+        res.status(401).send({status:"Unauthorized"})
     }
 })
 
@@ -101,7 +83,7 @@ router.patch('/:id',async(req,res)=>{
         });
         
     } else {
-        res.json({status:"Unauthorized"})
+        res.status(401).send({status:"Unauthorized"})
     }
 })
 
@@ -118,7 +100,7 @@ router.delete('/:id',async (req,res) => {
         });
     }
     else{
-        res.json({status:"Unauthorized"})
+        res.status(401).send({status:"Unauthorized"})
     }
 });
 

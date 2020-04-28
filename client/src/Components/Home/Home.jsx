@@ -7,7 +7,7 @@ function App() {
     <header className="App-header">
       <img src={logo} className="App-logo" alt="logo" />
       <h1 className="title">Universical</h1>
-      <div className="google-btn">
+      <a className="google-btn" href="/auth/google">
         <div className="google-icon-wrapper">
           <img
             className="google-icon"
@@ -15,10 +15,10 @@ function App() {
             alt="google icon"
           />
         </div>
-        <a className="btn-text" href="/auth/google">
+        <div className="btn-text" >
           Login with Google
-        </a>
-      </div>
+        </div>
+      </a>
       <br />
       <a href="/schedule">/schedule</a>
       <a href="/api/event">/api/event</a>

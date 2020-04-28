@@ -39,43 +39,37 @@ module.exports.addEvent = function (auth, event, cb) {
     auth: auth
   })
 
-  calendar.events.insert({
-      auth: auth,
-      calendarId: 'primary',
-      resource: event
-    },
-    (err, event) => {
-      if (err) {
-        console.error('Calendar Event Creation Error: ', err)
-        return
-      }
-      console.log('Event created', event.data.htmlLink);
-      cb(event);
-    })
-
   calendar.freebusy.query(
       {
           resource: {
-              timeMin: eventStartTime,
-              timeMax: eventEndTime,
+              timeMin: event.start.dateTime,
+              timeMax: event.end.dateTime,
               timeZone: 'Asia/Kolkata',
               items: [{ id: 'primary' }],
           },
       },
       (err,res) => {
-          if(err) return console.error('Free Busy Query Error: ',err)
-
+          if(err){ 
+            console.error('Free Busy Query Error: ',err)
+            cb(err)
+          }
           const eventsArr = res.data.calendars.primary.busy
-          console.log("Events Arr: ",eventsArr)
-          if(eventsArr.length === 0) return calendar.events.insert(
+          console.log("Events Arr: ",eventsArr.length)
+          if(eventsArr.length === 0) { 
+            calendar.events.insert(
               { calendarId: 'primary', resource: event },
                (err) => {
-                   if(err) return console.error('Calendar Event Creation Error: ',err)
-
-                   return console.log('Calendar Event Created')
+                   if(err){ 
+                    console.error('Calendar Event Creation Error: ',err)
+                    cb(err)
+                  }
+                  cb(event)
                })
-               return console.log(`Sorry I'm Busy`)
-      }
+              }
+              else{
+               cb(`Sorry I'm Busy`)
+            }
+    }
   )
 
 

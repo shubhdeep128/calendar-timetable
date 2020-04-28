@@ -1,10 +1,8 @@
 const passport = require("passport");
 const express = require("express");
 const app = express();
-const { google } = require('googleapis');
 
 const User = require('../../models/User')
-const googleCalendarService = require('../../utils/google-calendar.service')
 
 module.exports = app => {
   app.get("/auth/test", (req, res) => {

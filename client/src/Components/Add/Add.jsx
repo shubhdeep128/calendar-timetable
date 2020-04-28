@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Add.css";
+import axios from 'axios'
 import { Input, TextField, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -11,7 +12,41 @@ import Select from "@material-ui/core/Select";
 // import { EventNoteIcon } from "@material-ui/icons";
 
 export default class Add extends Component {
+
+  onClick = ()=>{
+    const eventStartTime = new Date();
+    eventStartTime.setDate(eventStartTime.getDay())
+    eventStartTime.setMinutes(eventStartTime.getMinutes() + 30)
+    const eventEndTime = new Date()
+    eventEndTime.setDate(eventEndTime.getDay())
+    eventEndTime.setMinutes(eventEndTime.getMinutes() + 90)
+    const event = {
+        summary: 'Test Event',
+        location: 'Home',
+        description: 'This is an event to test universical api',
+        colorId: 1,
+        start: {
+          dateTime: eventStartTime,
+          timeZone: 'Asia/Kolkata'
+        },
+        end: {
+          dateTime: eventEndTime,
+          timeZone: 'Asia/Kolkata'
+        },
+        colorId: 1,
+      }
+
+      axios.post('/api/event/add',event)
+      .then(response =>{
+        console.log(response);
+      }).catch((err)=>{
+        console.log(err)
+      })
+      
+  }
+
   render() {
+    this.onClick = this.onClick.bind(this)
     return (
       <div>
         <h1> Add New Event</h1>
@@ -77,6 +112,7 @@ export default class Add extends Component {
               </FormControl>
             </form>
           </div>
+          <button className = "button" onClick = {this.onClick}>Submit</button>
         </div>
       </div>
     );
