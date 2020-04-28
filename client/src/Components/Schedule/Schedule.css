@@ -84,6 +84,7 @@ body {
 
 .color3 {
   border: none !important;
+  color: #e9f1fc;
   /* Grape */
   background-color: #8e24aa;
 }
@@ -97,6 +98,7 @@ body {
 
 .color5 {
   border: none !important;
+  color: #e9f1fc;
   /* Banana  */
   background-color: #f6c026;
 }
@@ -110,12 +112,14 @@ body {
 
 .color7 {
   border: none !important;
+  color: #e9f1fc;
   /* Peacock  */
   background-color: #039be5;
 }
 
 .color8 {
   border: none !important;
+  color: #e9f1fc;
   /* Graphite  */
   background-color: #616161;
 }
@@ -137,4 +141,5 @@ body {
 .color11 {
   /* Tomato  */
   background-color: #d60000;
+  color: #e9f1fc;
 }
