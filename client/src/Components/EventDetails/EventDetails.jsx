@@ -36,15 +36,22 @@ export default class EventDetails extends Component {
           <h1 className={`titleHeadEvent color${this.state.data.colorId}`}>
             {this.state.data.summary}
           </h1>
-
+          <div className="info">
+            <p>
+              Created: <i class="far fa-clock"></i>
+              {moment(this.state.data.created).calendar()}
+            </p>
+            <p>Updated: {moment(this.state.data.updated).calendar()}</p>
+            <p>Link: {this.state.data.htmlLink}</p>
+          </div>
           {/* <div>
             <i class="far fa-clock"></i>
             {moment(this.state.data.start.dateTime).calendar()}
           </div> */}
 
-          {Object.keys(this.state.data).map((obj) => (
+          {/* {Object.keys(this.state.data).map((obj) => (
             <p>{obj}</p>
-          ))}
+          ))} */}
         </div>
       </div>
     );
