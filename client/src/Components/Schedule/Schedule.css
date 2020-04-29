@@ -162,6 +162,7 @@ body {
 
 .color11 {
   /* Tomato  */
+  border: none !important;
   background-color: #d60000;
   background: linear-gradient(180deg, #d60000 0%, #be0303 100%);
 
