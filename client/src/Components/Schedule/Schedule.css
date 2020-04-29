@@ -17,6 +17,10 @@ body {
   z-index: 2;
 }
 
+.upComing a {
+  text-decoration: none;
+}
+
 .upComing {
   padding: 20px;
   text-align: center;
@@ -69,7 +73,7 @@ body {
 .colorundefined {
   border: none !important;
   background-color: #1a73e8;
-  background: linear-gradient(180deg, #1a73e8 0%, #076bee 100%);
+  background: linear-gradient(180deg, #1a73e8 0%, #0064e6 100%);
   color: #e9f1fc;
 }
 

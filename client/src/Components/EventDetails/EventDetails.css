@@ -1,0 +1,178 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin-top: 8vh;
+    font-family: "Montserrat", Arial, Helvetica, sans-serif;
+}
+
+.titleHeadEvent {
+    font-family: "Montserrat", Arial, Helvetica, sans-serif;
+    padding: 20px;
+    margin-top: 8vh;
+    font-size: 3em;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 2;
+}
+
+.upComing {
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.upComingChild {
+    cursor: pointer;
+    padding: 20px;
+    min-width: 500px;
+    margin: 5px 0px 5px 0px;
+    text-align: left;
+    border-radius: 5px;
+    max-width: 700px;
+    border: 1px solid #000000;
+}
+
+.upComingChild .details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 580px) {
+    .upComing {
+        padding: 20px;
+        text-align: center;
+        max-width: 500px;
+    }
+
+    .upComingChild {
+        padding: 20px;
+        min-width: 90vw;
+    }
+}
+
+.ajax-loaded {
+    visibility: hidden;
+}
+
+.ajax-loading {
+    visibility: show;
+}
+
+.titleHead {
+    padding: 20px;
+    border-radius: 20px;
+}
+
+/* Colors */
+.colorundefined {
+    border: none !important;
+    background-color: #1a73e8;
+    background: linear-gradient(180deg, #1a73e8 0%, #0064e6 100%);
+    color: #e9f1fc;
+}
+
+.color1 {
+    border: none !important;
+    background-color: #7986cb;
+    background: linear-gradient(180deg, #7986cb 0%, #6a79c5 100%);
+
+}
+
+.color2 {
+    border: none !important;
+    /* Sage  */
+    background-color: #33b679;
+    background: linear-gradient(180deg, #33b679 0%, #069954 100%);
+    color: rgb(228, 252, 237);
+}
+
+.color3 {
+    border: none !important;
+    color: #e9f1fc;
+
+    /* Grape */
+    background-color: #8e24aa;
+    background: linear-gradient(180deg, #8e24aa 0%, #890eab 100%);
+
+}
+
+.color4 {
+    border: none !important;
+    /* Flamingo  */
+    background-color: #e97268;
+    color: rgb(253, 243, 241);
+    background: linear-gradient(180deg, #e97268 0%, #e66054 100%);
+
+}
+
+.color5 {
+    border: none !important;
+    color: #e9f1fc;
+    /* Banana  */
+    background-color: #f6c026;
+    background: linear-gradient(180deg, #f6c026 0%, #f3b610 100%);
+
+}
+
+.color6 {
+    border: none !important;
+    /* Tangerine  */
+    background-color: #f5511d;
+    background: linear-gradient(180deg, #f5511d 0%, #f0430e 100%);
+
+    color: #ffece5;
+}
+
+.color7 {
+    border: none !important;
+    color: #e9f1fc;
+    /* Peacock  */
+    background-color: #039be5;
+    background: linear-gradient(180deg, #039be5 0%, #0487c9 100%);
+
+}
+
+.color8 {
+    border: none !important;
+    color: #e9f1fc;
+    /* Graphite  */
+    background-color: #616161;
+    background: linear-gradient(180deg, #616161 0%, #4d4d4d 100%);
+
+}
+
+.color9 {
+    border: none !important;
+    /* Blueberry  */
+    background-color: #3f51b5;
+    background: linear-gradient(180deg, #3f51b5 0%, #3044b4 100%);
+    color: #d9dffc;
+}
+
+.color10 {
+    border: none !important;
+    /* Basil */
+    background-color: #0b8043;
+    background: linear-gradient(180deg, #0b8043 0%, #026a34 100%);
+
+    color: #d5fde8;
+}
+
+.color11 {
+    /* Tomato  */
+    border: none !important;
+    background-color: #d60000;
+    background: linear-gradient(180deg, #d60000 0%, #be0303 100%);
+
+    color: #e9f1fc;
+}

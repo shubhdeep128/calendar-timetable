@@ -23,8 +23,6 @@ export default class Schedule extends Component {
     <div className={this.state.loaded ? "ajax-loaded" : "ajax-loading"}>
       LOADING...
     </div>
-    /* The class ajax-loaded -- you guessed it, hides the div */
-    /* The thing to always keep in mind -- when state changes, things happen! */
   );
   render() {
     return (
@@ -33,21 +31,23 @@ export default class Schedule extends Component {
         {this.loading()}
         <div className="upComing">
           {this.state.data.map((data) => (
-            <div className={`upComingChild color${data.colorId}`}>
-              <h1>{data.summary}</h1>
-              <div className={`details`}>
-                <div className="startDate">
-                  {data.start.dateTime
-                    ? moment(data.start.dateTime).calendar()
-                    : moment(data.start.date).format("ll")}
-                </div>
-                <div className="endDate">
-                  {data.end.dateTime
-                    ? moment(data.end.dateTime).format("Do MMM")
-                    : moment(data.end.date).format("Do MMM")}
+            <a href={"/eventdetails/" + data.id}>
+              <div className={`upComingChild color${data.colorId}`}>
+                <h1>{data.summary}</h1>
+                <div className={`details`}>
+                  <div className="startDate">
+                    {data.start.dateTime
+                      ? moment(data.start.dateTime).calendar()
+                      : moment(data.start.date).format("ll")}
+                  </div>
+                  <div className="endDate">
+                    {data.end.dateTime
+                      ? moment(data.end.dateTime).format("Do MMM")
+                      : moment(data.end.date).format("Do MMM")}
+                  </div>
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>
