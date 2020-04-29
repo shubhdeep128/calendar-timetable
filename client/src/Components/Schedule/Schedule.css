@@ -8,11 +8,13 @@ body {
   margin-top: 8vh;
   font-family: "Montserrat", Arial, Helvetica, sans-serif;
 }
+
 .titleHead {
   font-family: "Manjari", "Montserrat", Arial, Helvetica, sans-serif;
   margin-top: 10vh;
   font-size: 3em;
   position: relative;
+  z-index: 2;
 }
 
 .upComing {
