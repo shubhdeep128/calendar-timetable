@@ -4,6 +4,7 @@ const passport = require("passport")
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
 const cors = require('cors');
+const cookieSession = require("cookie-session");
 const path = require("path")
 const session = require('express-session');
 require('dotenv/config');
@@ -32,6 +33,8 @@ mongoose.connect(
   },
   () => console.log("Connected to MongoDB")
 );
+
+app.enable('trust proxy'); 
 app.use(
   session({
     name: 'sid',
@@ -45,6 +48,15 @@ app.use(
     }
   })
 )
+
+// app.use(
+//   cookieSession({
+//     maxAge: 30 * 24 * 60 * 60 * 1000,
+//     keys: ["somesecretsauce"]
+//   })
+// );
+
+
 
 //  PASSPORT AUTH
 
