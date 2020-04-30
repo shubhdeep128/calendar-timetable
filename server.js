@@ -34,27 +34,27 @@ mongoose.connect(
   () => console.log("Connected to MongoDB")
 );
 
-app.enable('trust proxy'); 
-app.use(
-  session({
-    name: 'sid',
-    saveUninitialized: false,
-    resave: false,
-    secret: 'secretsauce',
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 2,
-      sameSite: true,
-      secure: process.env.NODE_ENV === 'production'
-    }
-  })
-)
-
+// app.enable('trust proxy'); 
 // app.use(
-//   cookieSession({
-//     maxAge: 30 * 24 * 60 * 60 * 1000,
-//     keys: ["somesecretsauce"]
+//   session({
+//     name: 'sid',
+//     saveUninitialized: false,
+//     resave: false,
+//     secret: 'secretsauce',
+//     cookie: {
+//       maxAge: 1000 * 60 * 60 * 2,
+//       sameSite: true,
+//       secure: process.env.NODE_ENV === 'production'
+//     }
 //   })
-// );
+// )
+
+app.use(
+  cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: ["somesecretsauce"]
+  })
+);
 
 
 
