@@ -12,7 +12,7 @@ module.exports = app => {
     "/auth/google",
     passport.authenticate("google", {
       scope: [
-        'https://www.googleapis.com/auth/calendar.events.readonly',
+        'https://www.googleapis.com/auth/calendar.events',
         'profile',
         'email',
         'https://www.googleapis.com/auth/calendar'
@@ -31,14 +31,10 @@ module.exports = app => {
 
   app.get("/api/logout", (req, res) => {
     
-    req.session.destroy(err=>{
-      if(err){
-        res.redirect('/api');
-      }
-      res.clearCookie('sid');
+      req.session = null;
       req.logout();
       res.redirect("/");
-    })
+   
 
   });
 

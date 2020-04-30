@@ -30,6 +30,9 @@ passport.use('google',
       passReqToCallback: true
     },
     (req,accessToken, refreshToken, profile, done) => {
+      req.session.accessToken = accessToken
+      req.session.refreshToken = refreshToken
+      console.log(req.session)
       User.findOne({ email: profile.emails[0].value }).then(existingUser => {
         if (existingUser) {
           done(null, existingUser);
@@ -41,13 +44,13 @@ passport.use('google',
             photo: profile.photos[0].value.split("?")[0]
           })
             .save()
-            .then(()=>{console.log("New User Created")});
-            
+            .then((user)=>{
+              console.log("New User Created")
+              done(null,user);
+          });
         }
       });
-      req.session.accessToken = accessToken
-      req.session.refreshToken = refreshToken
-      console.log(req.session)
+
 
     }
   )
